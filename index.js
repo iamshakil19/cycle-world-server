@@ -27,13 +27,13 @@ async function run() {
             res.send(products)
         })
 
-        // // single inventory api
-        // app.get('/products/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const query = { _id: ObjectId(id) };
-        //     const product = await productCollection.findOne(query);
-        //     res.send(product)
-        // })
+        // single inventory api
+        app.get('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const product = await productCollection.findOne(query);
+            res.send(product)
+        })
 
         // update api
         app.put('/products/:id', async (req, res) => {
