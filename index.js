@@ -27,13 +27,13 @@ async function run() {
             res.send(products)
         })
 
-        // single inventory api
-        app.get('/products/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const product = await productCollection.findOne(query);
-            res.send(product)
-        })
+        // // single inventory api
+        // app.get('/products/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const product = await productCollection.findOne(query);
+        //     res.send(product)
+        // })
 
         // update api
         app.put('/products/:id', async (req, res) => {
@@ -52,12 +52,21 @@ async function run() {
         })
 
         //post api
-        app.post('/products', async(req, res) => {
+        app.post('/products', async (req, res) => {
             const newInventory = req.body;
             console.log("adding new user", newInventory);
             const result = await productCollection.insertOne(newInventory);
             res.send(result);
         })
+
+        // delete api
+        app.delete('/products/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await productCollection.deleteOne(query)
+            res.send(result)
+        })
+
     }
     finally {
 
