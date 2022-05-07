@@ -50,6 +50,14 @@ async function run() {
             const result = await productCollection.updateOne(filter, updateDoc, options)
             res.send(result)
         })
+
+        //post api
+        app.post('/products', async(req, res) => {
+            const newInventory = req.body;
+            console.log("adding new user", newInventory);
+            const result = await productCollection.insertOne(newInventory);
+            res.send(result);
+        })
     }
     finally {
 
