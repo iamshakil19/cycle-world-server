@@ -38,16 +38,29 @@ async function run() {
         // update api
         app.put('/products/:id', async (req, res) => {
             const id = req.params.id;
-            const updatedInventory = req.body;
+            const updatedInventory = Number(req.body.quantity)
+            console.log(id, updatedInventory);
             const filter = { _id: ObjectId(id) }
-            const options = { upsert: true };
 
             const updateDoc = {
-                $set: {
-                    quantity: updatedInventory.quantity
+                $inc: {
+                    quantity: +updatedInventory
                 }
             };
-            const result = await productCollection.updateOne(filter, updateDoc, options)
+            const result = await productCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
+
+        // delivery api
+        app.put('/delivery/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            const updateDoc = {
+                $inc: {
+                    quantity: -1
+                }
+            };
+            const result = await productCollection.updateOne(filter, updateDoc)
             res.send(result)
         })
 
